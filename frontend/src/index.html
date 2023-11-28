@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="./styles/main.css">
+  <title>MVP 4</title>
+</head>
+
+<header>
+  <div class="container py-4">
+    <h3>Projeto MVP 4 - Engenharia de Software</h3>
+    <h5 class="lead">
+      Sistema desenvolvido para predição de insuficiência cardíaca. Preencha as informações abaixo e clique em
+      Diagnóstico!
+    </h5>
+  </div>
+</header>
+
+<body>
+  <div class="container pt-4 pb-2 my-4 rounded">
+    <h4>Formulário</h4>
+    <form>
+      <div class="row">
+        <div class="form-group col-md">
+          <label for="name">Nome</label>
+          <input class="form-control" placeholder="Digite seu nome" type="text" id="name" name="name">
+        </div>
+        <div class="form-group col-md">
+          <label for="age">Idade</label>
+          <input class="form-control" placeholder="Digite sua idade" type="number" id="age" name="age">
+        </div>
+        <div class="form-group col-md">
+          <label for="sex">Sexo</label>
+          <select class="form-control" id="sex" name="sex">
+            <option value="1">Masculino</option>
+            <option value="0">Feminino</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-md">
+          <label for="chest_pain">Tipo de Dor Torácica</label>
+          <select class="form-control" id="chest_pain" name="chest_pain">
+            <option value="chest_pain_asy">Dor Torácica Assintomática</option>
+            <option value="chest_pain_ata">Dor Torácica Atípica</option>
+            <option value="chest_pain_nap">Dor Torácica Não Anginosa</option>
+            <option value="chest_pain_ta">Dor Torácica Típica</option>
+          </select>
+        </div>
+        <div class="form-group col-md">
+          <label for="resting_b">Pressão Arterial de Repouso [mm Hg]</label>
+          <input class="form-control" type="number" id="resting_b" name="resting_b">
+        </div>
+        <div class="form-group col-md">
+          <label for="cholesterol">Colesterol [mm/dl]</label>
+          <input class="form-control" type="number" id="cholesterol" name="cholesterol">
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-md" title="Glicemia em jejum [1: se > 120 mg/dl, 0: caso contrário]">
+          <label for="fastingBS">Glicemia em jejum - 1 ou 0</label>
+          <input class="form-control" type="number" id="fastingBS" name="fastingBS">
+        </div>
+        <div class="form-group col-md">
+          <label for="ecg">ECG em repouso</label>
+          <select class="form-control" id="ecg" name="ecg">
+            <option value="resting_normal">Eletrocardiograma de Repouso Normal</option>
+            <option value="resting_st">Anormalidade do Seguimento ST no Eletrocardiograma de Repouso</option>
+            <option value="resting_lvh">Hipertrofia Ventricular Esquerda em Repouso</option>
+          </select>
+        </div>
+        <div class="form-group col-md">
+          <label for="max_hr">Freq. Cardíaca Máx. Atingida [60 - 202]</label>
+          <input class="form-control" type="number" id="max_hr" name="max_hr">
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-md">
+          <label for="exercise_angina">Angina Induzida por Exercício</label>
+          <select class="form-control" id="exercise_angina" name="exercise_angina">
+            <option value="0">Não</option>
+            <option value="1">Sim</option>
+          </select>
+        </div>
+        <div class="form-group col-md">
+          <label for="oldpeak">Depressão do Seg. ST</label>
+          <input class="form-control" type="number" id="oldpeak" name="oldpeak">
+        </div>
+        <div class="form-group col-md">
+          <label for="st_slope" title="Inclinação do pico do exercício seguimento ST">
+            Inclinação exercício seg. ST
+          </label>
+          <select class="form-control" id="st_slope" name="st_slope">
+            <option value="up">Up</option>
+            <option value="flat">Flat</option>
+            <option value="down">Down</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-md d-flex justify-content-end">
+          <button class="btn btn-primary w-25" onclick="getFormData()">
+            Diagnóstico
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="container py-4 rounded">
+    <h4 class="mb-4">Diagnóstico</h4>
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th class="text-nowrap">#</th>
+            <th class="text-nowrap">Diagnóstico</th> <!-- Doença Cardíaca / Normal -->
+            <th class="text-nowrap">Nome</th>
+            <th class="text-nowrap">Idade</th>
+            <th class="text-nowrap">Sexo</th>
+            <th class="text-nowrap">Tipo de dor torácica</th><!-- AT, ATA, NAP, ASY -->
+            <th class="text-nowrap">Pressão art. de repouso</th>
+            <th class="text-nowrap">Colesterol</th>
+            <th class="text-nowrap">Glicemia de jejum</th>
+            <th class="text-nowrap">ECG de repouso</th> <!-- normal, ST, HVE -->
+            <th class="text-nowrap">Freq. cardíaca máx.</th>
+            <th class="text-nowrap">Angina induzida por exercício</th>
+            <th class="text-nowrap">Depressão do seg. ST</th>
+            <th class="text-nowrap">Inclinação exercício seg. ST</th> <!-- Up Flat Down -->
+          </tr>
+        </thead>
+        <tbody id="item-list"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <footer class="my-4">
+    <div class="container d-flex justify-content-center py-2">
+      <h5 class="lead mt-4">
+        Desenvolvido por: Rainério Costa
+        2023
+      </h5>
+    </div>
+  </footer class="my-4">
+</body>
+
+</html>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+  integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+  integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+  integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+<script src='./services/services.js'></script>
+<script src='./services/main.js'></script>
+
+<script>
+  async function _getContactList() {
+    const responseApi = await getList();
+    const tableBody = document.getElementById('item-list');
+
+    renderList(responseApi.patient_list, tableBody);
+  }
+  _getContactList()
+</script>
+
+<script>
+  async function getFormData() {
+    event.preventDefault();
+
+    let name = document.getElementById("name").value
+    let age = document.getElementById("age").value
+    let sex = document.getElementById("sex").value
+    let chest_pain = document.getElementById("chest_pain").value
+    let resting_b = document.getElementById("resting_b").value
+    let cholesterol = document.getElementById("cholesterol").value
+    let fastingBS = document.getElementById("fastingBS").value
+    let ecg = document.getElementById("ecg").value
+    let max_hr = document.getElementById("max_hr").value
+    let exercise_angina = document.getElementById("exercise_angina").value
+    let oldpeak = document.getElementById("oldpeak").value
+    let st_slope = document.getElementById("st_slope").value
+
+    if (name == "" || age == "" || sex == "" || chest_pain == "" || resting_b == "" || cholesterol == "" || fastingBS == "" ||
+      ecg == "" || max_hr == "" || exercise_angina == "" || oldpeak == "" || st_slope == "") {
+      return alert("Preencha todos os campos para prosseguir!")
+    }
+
+    const formData = {
+      name,
+      age,
+      sex,
+      chest_pain,
+      resting_b,
+      cholesterol,
+      fastingBS,
+      ecg,
+      max_hr,
+      exercise_angina,
+      oldpeak,
+      st_slope,
+    }
+
+    const response = await createPatient(formData);
+
+    if (response.id) {
+      alert("Sucesso! Redirecionando...")
+      return setTimeout(() => { return window.location.href = '../src/index.html' }, 500)
+    } else {
+      alert("Falha ao cadastrar paciente")
+    }
+  }
+</script>
