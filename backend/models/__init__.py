@@ -7,6 +7,7 @@ import os
 from models.base import Base
 from models.patient import Patient
 from models.model import Model
+from model import Avaliador, Carregador, PreProcessador
 
 db_path = "database/"
 db_url = "sqlite:///%s/db.sqlite3" % db_path
